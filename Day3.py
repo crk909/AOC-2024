@@ -29,7 +29,7 @@ def day3_2(filename):
     matches.extend(re.finditer(regexFilter, lines))
     starts.extend(re.finditer(doFilter, lines))
     stops.extend(re.finditer(dontFilter, lines))
-    print(len(matches))
+    # print(len(matches))
 
     first_nums = np.asarray([int((re.search('\\d+', x.group())).group()) for x in matches])
     second_nums = np.asarray([int((re.search(',\\d+', x.group())).group().strip(',')) for x in matches])
@@ -40,10 +40,10 @@ def day3_2(filename):
     stops.append(match_locations[-1] + 1)
     allow_matches = True
 
-    print(match_locations)
-    print(match_locations[-1])
-    print(starts)
-    print(stops)
+    # print(match_locations)
+    # print(match_locations[-1])
+    # print(starts)
+    # print(stops)
 
     stops_pointer = 0
     starts_pointer = 0
@@ -58,7 +58,7 @@ def day3_2(filename):
                 allow_matches = False
                 stops_pointer += 1
         if allow_matches:
-            print(this_match)
+            # print(this_match)
             total_sum += first_nums[i] * second_nums[i]
     print(total_sum)
 
