@@ -28,40 +28,52 @@ def day2_2(filename):
     for line in lines:
         nums = np.asarray([int(x) for x in line.split()])
         diffs = getDiffs(nums)
-        print(count_safe, nums)
-        print(diffs)
         if is_safe(diffs):
             count_safe += 1
         else:
-            count_safe += skip_levels(np.copy(diffs), nums)
-            count_safe += skip_levels(np.copy(diffs * (-1)), nums)
+            pos = skip_levels(np.copy(diffs), nums)
+            neg = skip_levels(np.copy(diffs * (-1)), nums)
+            if pos or neg:
+                count_safe += 1
+
 
     print(count_safe)
 
 
-def skip_levels(diffs, nums):
-    used_skip = False
-    i = 0
-    while i < len(diffs):
-        if diffs[i] not in (1, 2, 3):
-            if used_skip:
-                return 0
-            elif i == 0 or i == len(diffs) -1:
-                diffs = np.delete(diffs, i)
+def skip_levels(indiffs, nums):
+    for i in range(len(indiffs)):
+        if indiffs[i] not in (1, 2, 3):
+            if i == 0:
+                # print("First element")
+                delFirst = np.delete(indiffs, i)
+                delSecond = np.copy(indiffs[1:])
+                delSecond[0] += indiffs[0]
+                return is_safe(delFirst) or is_safe(delSecond)
+            elif i == len(indiffs) - 1:
+                # print("Last element")
+                return True
             else:
-                diffs[i] += diffs[i + 1]
-                diffs = np.delete(diffs, i + 1)
-            used_skip = True
-        else:
-            i += 1
-    print(diffs)
-    return 1
+                # print("Tried con 3 on pos:", i)
+                delHere = np.copy(indiffs[i + 1:])
+                delHere[0] += indiffs[i]
+                delHere = np.append(delHere, indiffs[0])
+
+                delPrev = np.copy(indiffs[i:])
+                delPrev[0] += indiffs[i - 1]
+                delPrev = np.append(delPrev, indiffs[0])
+                # print(delPrev, delHere)
+                return is_safe(delHere) or is_safe(delPrev)
+
+    print("This is bad...")
+    return False
 
 
 testFile = "InputFiles/day2test1.txt"
 realFile = "InputFiles/day2real1.txt"
+moreTests = "InputFiles/day2tests.txt"
 
 # day2_1(testFile)
 # day2_1(realFile)
 # day2_2(testFile)
+# day2_2(moreTests)
 day2_2(realFile)
