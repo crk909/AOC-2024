@@ -68,9 +68,9 @@ def skip_levels(indiffs, nums):
     return False
 
 
-testFile = "InputFiles/day2test1.txt"
-realFile = "InputFiles/day2real1.txt"
-moreTests = "InputFiles/day2tests.txt"
+testFile = "InputFiles/day2test.txt"
+realFile = "InputFiles/day2real.txt"
+moreTests = "InputFiles/day2moretests.txt"
 
 # day2_1(testFile)
 # day2_1(realFile)

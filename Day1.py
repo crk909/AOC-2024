@@ -35,8 +35,8 @@ def day1_2(filename):
     print(sum(similarities))
 
 
-testFile = "InputFiles/day1test1.txt"
-realFile = "InputFiles/day1real1.txt"
+testFile = "InputFiles/day1test.txt"
+realFile = "InputFiles/day1real.txt"
 
 # day1_1(testFile)
 # day1_1(realFile)
