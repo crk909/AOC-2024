@@ -55,6 +55,13 @@ def count_goods(array):
     print(np.sum(collect))
     return np.sum(collect)
 
+
+def is_xmas(t_l, t_r, b_l, b_r):
+    if t_l in ('S', 'M') and b_r in ('S', 'M'):
+        if (t_l == t_r and b_l == b_r) or (t_l == b_l and b_r == t_r):
+            return t_l != b_r
+    return False
+
 def day4_2(filename):
     f = open(filename, 'r')
     lines = f.readlines()
@@ -63,14 +70,21 @@ def day4_2(filename):
     for line in lines:
         x.append(list(line.strip()))
     nump = np.array(x)
+    xmases = 0
 
     A_spots = np.transpose(np.where(nump=='A'))
     for i,j in A_spots:
-        if max(i, j) == len(nump[0]) or min(i,j) == 0:
+        if max(i, j) == len(nump[0])-1 or min(i,j) == 0:
             continue
         # These are the locations to be checked. Need MM and SS in corners
-        print(i, j)
-
+        top_l = nump[i-1, j-1]
+        top_r = nump[i-1, j+1]
+        bot_l = nump[i+1, j-1]
+        bot_r = nump[i+1, j+1]
+        if is_xmas(top_l, top_r, bot_l, bot_r):
+            xmases += 1
+            print(nump[i-1:i+2,j-1:j+2])
+    print(xmases)
 
 day = "4"
 testFile = "InputFiles/day" + day + "test.txt"
@@ -81,10 +95,8 @@ moreTests = "InputFiles/day" + day + "moretests.txt"
 # day4_1(testFile)
 # day4_1(realFile)
 #
-day4_2(testFile)
-# day4_2(testFile2)
-# day4_2(moreTests)
-# day4_2(realFile)
+# day4_2(testFile)
+day4_2(realFile)
 
 
 
